@@ -72,4 +72,4 @@ describe("tests", () => {
 });
 ```
 
-With `teststate`, `foo` is always of type `SomeType` and can be accessed via `state.foo`
+With `teststate`, `foo` is always of type `SomeType` and can be accessed via `state.foo`.
