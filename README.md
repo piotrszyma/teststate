@@ -2,6 +2,18 @@
 
 Create immutable test state reinitialized after each test case with type inference.
 
+## Install
+
+### Using npm
+```
+npm install teststate
+```
+
+### Using yarn
+```
+yarn add --dev teststate
+```
+
 ## Example
 
 ```ts
