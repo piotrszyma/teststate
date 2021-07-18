@@ -6,6 +6,22 @@
   "typings": "dist/index.d.ts",
   "author": "Piotr Szyma",
   "license": "MIT",
+  "keywords": [
+    "ava",
+    "babel",
+    "coverage",
+    "easy",
+    "expect",
+    "instant",
+    "immutable",
+    "inference",
+    "jasmine",
+    "jest",
+    "mocha",
+    "testing",
+    "test",
+    "typescript"
+  ],
   "scripts": {
     "build": "tsc -p ./tsconfig.build.json",
     "test": "jest"
