@@ -6,6 +6,8 @@ Create immutable test state reinitialized after each test case with type inferen
 
 ```ts
 
+import { testState } from 'teststate';
+
 const EXPECTED_VALUE = '...';
 
 describe("test fooMethod", () => {
