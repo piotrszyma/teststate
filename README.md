@@ -16,7 +16,7 @@ npm install teststate
 yarn add --dev teststate
 ```
 
-## Example
+## How to use?
 
 ```ts
 import { testState } from "teststate";
@@ -37,18 +37,36 @@ describe("test fooMethod", () => {
 });
 ```
 
-## Why this library?
+## Why should I use this library?
 
 Normally, when you define some state in `beforeEach` hook, you do:
 
 ```ts
-let foo: null | SomeType = null;
+describe('tests', () => {
+  let foo: null | SomeType = null;
 
-beforeEach(() => {
-  foo = createSomeTypeInstance();
+  beforeEach(() => {
+    foo = createSomeTypeInstance();
+  });
+
+  it('passes the test', () => {
+    // here foo can be SomeType | null
+  });
 });
 ```
 
-Then in test you need to make sure `foo !== null`
+```ts
+describe('tests', () => {
+  const state = testState(() => {
+    return {
+      foo: createSomeTypeInstance(),
+    }
+  }, beforeEach);
 
-With `teststate`, `foo` is always not null and can be accessed via `state.foo` as `SomeType`
+  it('passes the test', () => {
+    // here state.foo must be SomeType
+  });
+});
+```
+
+With `teststate`, `foo` is always of type `SomeType` and can be accessed via `state.foo``
