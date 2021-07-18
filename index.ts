@@ -27,5 +27,6 @@ export function testState<T>(
       state[key] = initState[key];
     }
   });
+
   return state;
 }
