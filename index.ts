@@ -15,16 +15,16 @@ interface Lifecycle {
     (fn: ProvidesCallback): any;
 }
 
-export function testState<T extends { [key in string]: any }>(
+export function testState<T>(
   factory: TestStateFactory<T>,
-  beforeEach: Lifecycle,
+  beforeEach: Lifecycle
 ): T {
-  const state =  factory();
+  const state = factory();
 
   beforeEach(() => {
     const initState = factory();
-    for (const key of Object.keys(state)) {
-      state[key as keyof typeof state] = initState[key];
+    for (const key in state) {
+      state[key] = initState[key];
     }
   });
   return state;
