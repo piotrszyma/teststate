@@ -16,7 +16,7 @@ npm install teststate
 yarn add --dev teststate
 ```
 
-## How to use?
+## How to use this library?
 
 ```ts
 import { testState } from "teststate";
