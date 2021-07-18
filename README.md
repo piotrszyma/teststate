@@ -1,6 +1,6 @@
 # teststate
 
-Create immutable test state reinitialized after each test case with type inferece.
+Create immutable test state reinitialized after each test case with type inference.
 
 ## Example
 
