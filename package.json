@@ -6,6 +6,10 @@
   "typings": "dist/index.d.ts",
   "author": "Piotr Szyma",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/piotrszyma/teststate",
+    "email": "contact@piotrszyma.pl"
+  },
   "keywords": [
     "ava",
     "babel",
