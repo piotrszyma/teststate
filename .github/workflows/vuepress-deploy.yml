@@ -12,6 +12,6 @@ jobs:
       env:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         TARGET_REPO: piotrszyma/teststate
-        TARGET_BRANCH: master
+        TARGET_BRANCH: docs
         BUILD_SCRIPT: yarn && yarn docs:build
         BUILD_DIR: docs/.vuepress/dist
