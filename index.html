@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>teststate 🧪 | teststate</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    
+    <meta name="description" content="docs for teststate library">
+    
+    <link rel="preload" href="/teststate/assets/css/0.styles.31cc6b95.css" as="style"><link rel="preload" href="/teststate/assets/js/app.92b31157.js" as="script"><link rel="preload" href="/teststate/assets/js/2.ca632e90.js" as="script"><link rel="preload" href="/teststate/assets/js/7.6c7d0251.js" as="script"><link rel="prefetch" href="/teststate/assets/js/3.18fd7af2.js"><link rel="prefetch" href="/teststate/assets/js/4.d6cdcb57.js"><link rel="prefetch" href="/teststate/assets/js/5.4f712cfc.js"><link rel="prefetch" href="/teststate/assets/js/6.d7e152ce.js">
+    <link rel="stylesheet" href="/teststate/assets/css/0.styles.31cc6b95.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/teststate/" aria-current="page" class="home-link router-link-exact-active router-link-active"><!----> <span class="site-name">teststate</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><!---->  <!----> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="teststate-🧪"><a href="#teststate-🧪" class="header-anchor">#</a> teststate 🧪</h1> <p>Create immutable test state reinitialized after each test case with type inference.</p> <h2 id="how-to-use-this-library"><a href="#how-to-use-this-library" class="header-anchor">#</a> How to use this library?</h2> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token comment">// (1) import testState method from teststate module.</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> testState <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;teststate&quot;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> <span class="token constant">EXPECTED_VALUE</span> <span class="token operator">=</span> <span class="token string">&quot;...&quot;</span><span class="token punctuation">;</span>
+
+<span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">&quot;test fooMethod&quot;</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span>
+  <span class="token comment">// (2) Declare state, pass a callback that builds state to be recreated between each tests.</span>
+  <span class="token keyword">const</span> state <span class="token operator">=</span> <span class="token function">testState</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> foo <span class="token operator">=</span> <span class="token function">fooFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">{</span> foo <span class="token punctuation">}</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span> beforeEach<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">&quot;returns bar&quot;</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token comment">// (3) Use state inside test methods.</span>
+    <span class="token keyword">const</span> result <span class="token operator">=</span> <span class="token function">fooMethod</span><span class="token punctuation">(</span>state<span class="token punctuation">.</span>foo<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">expect</span><span class="token punctuation">(</span>result<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">toBe</span><span class="token punctuation">(</span><span class="token constant">EXPECTED_VALUE</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h2 id="why-should-i-use-this-library"><a href="#why-should-i-use-this-library" class="header-anchor">#</a> Why should I use this library?</h2> <p>Normally, when you define some state in <code>beforeEach</code> hook, you do:</p> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">&quot;tests&quot;</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> foo<span class="token operator">:</span> <span class="token keyword">null</span> <span class="token operator">|</span> SomeType <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+
+  <span class="token function">beforeEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    foo <span class="token operator">=</span> <span class="token function">createSomeTypeInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">&quot;passes the test&quot;</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token comment">// here foo can be SomeType | null</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>With <code>teststate</code>, <code>foo</code> is always of type <code>SomeType</code> and can be accessed via <code>state.foo</code>.</p> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token function">describe</span><span class="token punctuation">(</span><span class="token string">&quot;tests&quot;</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> state <span class="token operator">=</span> <span class="token function">testState</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token punctuation">{</span>
+      foo<span class="token operator">:</span> <span class="token function">createSomeTypeInstance</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span> beforeEach<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token function">it</span><span class="token punctuation">(</span><span class="token string">&quot;passes the test&quot;</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+    <span class="token comment">// here state.foo must be SomeType</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div></div> <footer class="page-edit"><!----> <!----></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/teststate/assets/js/app.92b31157.js" defer></script><script src="/teststate/assets/js/2.ca632e90.js" defer></script><script src="/teststate/assets/js/7.6c7d0251.js" defer></script>
+  </body>
+</html>
