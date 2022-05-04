@@ -39,12 +39,19 @@ function genStateId(): number {
 
 const STATE_ID_PROPERTY = "___testStateStateId";
 
-let initialStates: Map<number, any> = new Map();
+let stateIdToState: Map<number, Record<string, unknown>> = new Map();
 
-export function resetState<T extends object>(state: T): void {
+function deepCopy<T>(v: T): T {
+  return JSON.parse(JSON.stringify(v)) as T;
+}
+
+export function resetState(state: Record<string, unknown>): void {
   if (STATE_ID_PROPERTY in state) {
     const stateId = (state as any)[STATE_ID_PROPERTY];
-    const initState = initialStates.get(stateId);
+    const initState = deepCopy(stateIdToState.get(stateId));
+    if (initState === undefined) {
+      throw new Error("Failed to get initial state.");
+    }
 
     for (const key in state) {
       state[key] = initState[key];
@@ -54,7 +61,7 @@ export function resetState<T extends object>(state: T): void {
   }
 
   const stateId = genStateId();
-  initialStates.set(stateId, JSON.parse(JSON.stringify(state)));
+  stateIdToState.set(stateId, deepCopy(state));
   Object.defineProperty(state, STATE_ID_PROPERTY, {
     enumerable: false,
     writable: false,
