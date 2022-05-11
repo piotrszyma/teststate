@@ -59,3 +59,13 @@ it("can be used for multiple states", () => {
   expect(stateA).toStrictEqual({ a: 1 });
   expect(stateB).toStrictEqual({ b: 2 });
 });
+
+// @ts-expect-error
+resetState({value: new Date()})
+
+// @ts-expect-error
+resetState({value: new Object()})
+
+class Dummy {}
+// @ts-expect-error
+resetState({value: new Dummy()})

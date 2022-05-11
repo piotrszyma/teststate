@@ -1,3 +1,9 @@
+type SerializableObjVal = SerializableObj | string | number;
+
+type SerializableObj = {
+  [key in string]: SerializableObjVal;
+};
+
 let stateId = 0;
 function genStateId(): number {
   stateId += 1;
@@ -6,13 +12,13 @@ function genStateId(): number {
 
 const STATE_ID_PROPERTY = "___testStateStateId";
 
-let stateIdToState: Map<number, Record<string, unknown>> = new Map();
+let stateIdToState: Map<number, SerializableObj> = new Map();
 
 function deepCopy<T>(v: T): T {
   return JSON.parse(JSON.stringify(v)) as T;
 }
 
-export function resetState(state: Record<string, unknown>): void {
+export function resetState(state: SerializableObj): void {
   if (STATE_ID_PROPERTY in state) {
     const stateId = (state as any)[STATE_ID_PROPERTY];
     const initState = deepCopy(stateIdToState.get(stateId));
@@ -36,4 +42,3 @@ export function resetState(state: Record<string, unknown>): void {
     value: stateId,
   });
 }
-
