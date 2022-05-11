@@ -4,6 +4,11 @@ describe("testState", () => {
   const state = testState(() => {
     return {
       a: 1,
+      mutableArray: [0, 1],
+      mutableObject: {
+        name: "John",
+        age: 68,
+      },
     };
   }, beforeEach);
 
@@ -25,6 +30,34 @@ describe("testState", () => {
 
   it("has clean state initially", () => {
     expect(state.a).toEqual(1);
+  });
+
+  it("recreates state.array after mutating it - case 1", () => {
+    expect(state.mutableArray).toEqual([0, 1]);
+    state.mutableArray.push(5);
+
+    expect(state.mutableArray).toEqual([0, 1, 5]);
+  });
+
+  it("recreates state.array after mutating it - case 2", () => {
+    expect(state.mutableArray).toEqual([0, 1]);
+    state.mutableArray.push(3);
+
+    expect(state.mutableArray).toEqual([0, 1, 3]);
+  });
+
+  it("recreates state.object after mutating it - case 1", () => {
+    expect(state.mutableObject).toEqual({ name: "John", age: 68 });
+    state.mutableObject.age = 69;
+
+    expect(state.mutableObject).toEqual({ name: "John", age: 69 });
+  });
+
+  it("recreates state.object after mutating it - case 2", () => {
+    expect(state.mutableObject).toEqual({ name: "John", age: 68 });
+    state.mutableObject.name = "Anna";
+
+    expect(state.mutableObject).toEqual({ name: "Anna", age: 68 });
   });
 });
 
@@ -88,4 +121,40 @@ describe("resetState", () => {
     expect(stateA).toStrictEqual({ a: 1 });
     expect(stateB).toStrictEqual({ b: 2 });
   });
+
+  it("resets mutated array in state", () => {
+    const state = {
+      mutableArray: [0, 1],
+    };
+    resetState(state);
+
+    state.mutableArray.push(5);
+    resetState(state);
+
+    expect(state.mutableArray).toEqual([0, 1]);
+  });
+
+  it("resets mutated object in state", () => {
+    const state = {
+      mutableObject: {
+        name: "John",
+        age: 68,
+      },
+    };
+    resetState(state);
+
+    state.mutableObject.age = 69;
+    resetState(state);
+
+    expect(state.mutableObject.age).toEqual(68);
+  });
+
+  it("can hande function in state", () => {
+    const returnStringFunction = () => "Hello world";
+    const state = {
+      func: returnStringFunction,
+    };
+
+    expect(state.func()).toEqual("Hello world");
+  })
 });
