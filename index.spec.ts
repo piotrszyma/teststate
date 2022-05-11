@@ -155,6 +155,9 @@ describe("resetState", () => {
       func: returnStringFunction,
     };
 
+    resetState(state);  // initial resetState
+    resetState(state);  // retrieve object via resetState
+
     expect(state.func()).toEqual("Hello world");
   })
 });
