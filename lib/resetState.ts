@@ -1,7 +1,13 @@
-type SerializableObjVal = SerializableObj | string | number | undefined;
+type SerializableObjVal =
+  | SerializableObj
+  | string
+  | number
+  | boolean
+  | null
+  | SerializableObjVal[];
 
 type SerializableObj = {
-  [key in string]: SerializableObjVal | Array<SerializableObjVal>;
+  [key in string]: SerializableObjVal;
 };
 
 let stateId = 0;

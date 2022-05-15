@@ -62,10 +62,7 @@ it("can be used for multiple states", () => {
 
 it("can be used for array", () => {
   const stateWithArray = {
-    a: [
-      { b: 1, c: 4 },
-      { b: 2, c: 2 },
-    ],
+    a: [1, 2, 3],
   };
 
   resetState(stateWithArray);
@@ -73,17 +70,7 @@ it("can be used for array", () => {
   stateWithArray.a = [];
 
   resetState(stateWithArray);
-});
-
-it("can be used with undefined", () => {
-  const state: Record<string, number | undefined> = { a: undefined };
-
-  resetState(state);
-  state.a = 1;
-
-  resetState(state);
-
-  expect(state.a).toBeUndefined();
+  expect(stateWithArray.a).toEqual([1, 2, 3]);
 });
 
 // @ts-expect-error
