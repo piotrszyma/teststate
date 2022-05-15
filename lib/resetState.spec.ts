@@ -60,6 +60,32 @@ it("can be used for multiple states", () => {
   expect(stateB).toStrictEqual({ b: 2 });
 });
 
+it("can be used for array", () => {
+  const stateWithArray = {
+    a: [
+      { b: 1, c: 4 },
+      { b: 2, c: 2 },
+    ],
+  };
+
+  resetState(stateWithArray);
+
+  stateWithArray.a = [];
+
+  resetState(stateWithArray);
+});
+
+it("can be used with undefined", () => {
+  const state: Record<string, number | undefined> = { a: undefined };
+
+  resetState(state);
+  state.a = 1;
+
+  resetState(state);
+
+  expect(state.a).toBeUndefined();
+});
+
 // @ts-expect-error
 resetState({value: new Date()})
 
