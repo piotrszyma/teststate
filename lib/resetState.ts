@@ -21,30 +21,41 @@ const STATE_ID_PROPERTY = "___testStateStateId";
 let stateIdToState: Map<number, SerializableObj> = new Map();
 
 function deepCopy<T>(v: T): T {
+  // TODO(pszyma): Add support for `undefined` as copied value.
   return JSON.parse(JSON.stringify(v)) as T;
 }
 
-export function resetState(state: SerializableObj): void {
-  if (STATE_ID_PROPERTY in state) {
-    const stateId = (state as any)[STATE_ID_PROPERTY];
-    const initState = deepCopy(stateIdToState.get(stateId));
-    if (initState === undefined) {
-      throw new Error("Failed to get initial state.");
-    }
+function objectStateInitialized(obj: SerializableObj): boolean {
+  return STATE_ID_PROPERTY in obj;
+}
 
-    for (const key in state) {
-      state[key] = initState[key];
-    }
-
-    return;
+function resetToInitialState(obj: SerializableObj): void {
+  const stateId = (obj as any)[STATE_ID_PROPERTY];
+  const initState = deepCopy(stateIdToState.get(stateId));
+  if (initState === undefined) {
+    throw new Error("Failed to get initial state.");
   }
 
+  for (const key in obj) {
+    obj[key] = initState[key];
+  }
+}
+
+function setInitialState(obj: SerializableObj): void {
   const stateId = genStateId();
-  stateIdToState.set(stateId, deepCopy(state));
-  Object.defineProperty(state, STATE_ID_PROPERTY, {
+  stateIdToState.set(stateId, deepCopy(obj));
+  Object.defineProperty(obj, STATE_ID_PROPERTY, {
     enumerable: false,
     writable: false,
     configurable: false,
     value: stateId,
   });
+}
+
+export function resetState(obj: SerializableObj): void {
+  if (objectStateInitialized(obj)) {
+    resetToInitialState(obj);
+  } else {
+    setInitialState(obj);
+  }
 }
