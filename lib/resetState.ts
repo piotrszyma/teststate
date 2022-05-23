@@ -32,7 +32,7 @@ function resetToInitialState(obj: SerializableObj): void {
   const stateId = (obj as any)[STATE_ID_PROPERTY];
   const initState = STATE_ID_TO_STATE_MAP.get(stateId);
   if (initState === undefined) {
-    throw new Error(`Failed to get state for object ${obj}`):
+    throw new Error(`Failed to get state for object ${obj}`);
   }
   const initStateCopy = deepCopy(initState);
   if (initStateCopy === undefined) {
