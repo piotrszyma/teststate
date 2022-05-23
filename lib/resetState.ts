@@ -18,32 +18,35 @@ function genStateId(): number {
 
 const STATE_ID_PROPERTY = "___testStateStateId";
 
-let stateIdToState: Map<number, SerializableObj> = new Map();
+let STATE_ID_TO_STATE_MAP: Map<number, SerializableObj> = new Map();
 
 function deepCopy(v: SerializableObj): SerializableObj {
-  // TODO: Recursively clone deeply.
   return JSON.parse(JSON.stringify(v)) as SerializableObj;
 }
 
-function objectStateInitialized(obj: SerializableObj): boolean {
+function isObjectStateInitialized(obj: SerializableObj): boolean {
   return STATE_ID_PROPERTY in obj;
 }
 
 function resetToInitialState(obj: SerializableObj): void {
   const stateId = (obj as any)[STATE_ID_PROPERTY];
-  const initState = deepCopy(stateIdToState.get(stateId) ?? {});
+  const initState = STATE_ID_TO_STATE_MAP.get(stateId);
   if (initState === undefined) {
+    throw new Error(`Failed to get state for object ${obj}`):
+  }
+  const initStateCopy = deepCopy(initState);
+  if (initStateCopy === undefined) {
     throw new Error("Failed to get initial state.");
   }
 
   for (const key in obj) {
-    obj[key] = initState[key];
+    obj[key] = initStateCopy[key];
   }
 }
 
 function setInitialState(obj: SerializableObj): void {
   const stateId = genStateId();
-  stateIdToState.set(stateId, deepCopy(obj));
+  STATE_ID_TO_STATE_MAP.set(stateId, deepCopy(obj));
   Object.defineProperty(obj, STATE_ID_PROPERTY, {
     enumerable: false,
     writable: false,
@@ -53,7 +56,7 @@ function setInitialState(obj: SerializableObj): void {
 }
 
 export function resetState(obj: SerializableObj): void {
-  if (objectStateInitialized(obj)) {
+  if (isObjectStateInitialized(obj)) {
     resetToInitialState(obj);
   } else {
     setInitialState(obj);

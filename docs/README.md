@@ -2,8 +2,9 @@
 
 Create immutable test state reinitialized after each test case with type inference.
 
+## API
 
-## How to use this library?
+# `testState`
 
 ```ts
 // (1) import testState method from teststate module.
@@ -17,6 +18,32 @@ describe("test fooMethod", () =>
     const foo = fooFactory();
     return { foo };
   }, beforeEach);
+
+  it("returns bar", () => {
+    // (3) Use state inside test methods.
+    const result = fooMethod(state.foo);
+
+    expect(result).toBe(EXPECTED_VALUE);
+  });
+});
+```
+
+# `resetState`
+
+```ts
+// (1) import resetState method from teststate module.
+import { testState } from "teststate";
+
+const EXPECTED_VALUE = "...";
+
+describe("test fooMethod", () =>
+  // (2) Declare state.
+  const state = {
+    foo: 1,
+  }
+
+  // (3) Call `resetState` in `beforeEach` method.
+  beforeEach(() => resetState(state));
 
   it("returns bar", () => {
     // (3) Use state inside test methods.
