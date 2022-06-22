@@ -36,9 +36,11 @@ describe("tests", () => {
 });
 ```
 
-## API
+## Reference
 
-# `testState`
+This section describes APIs exposed by this library.
+
+### `testState`
 
 Use `testState` method when your test state is built from some complex types / factory methods.
 
@@ -64,7 +66,7 @@ describe("test fooMethod", () =>
 });
 ```
 
-# `resetState`
+### `resetState`
 
 Use `resetState` method when your test state consist only primitive types and can be serialized.
 
@@ -84,7 +86,7 @@ describe("test fooMethod", () =>
   beforeEach(() => resetState(state));
 
   it("returns bar", () => {
-    // (3) Use state inside test methods.
+    // (4) Use state inside test methods.
     const result = fooMethod(state.foo);
 
     expect(result).toBe(EXPECTED_VALUE);
