@@ -18,6 +18,8 @@ yarn add --dev teststate
 
 ## How to use this library?
 
+Use `testState` method when your test state is built from some complex types / factory methods.
+
 ```ts
 // (1) import testState method from teststate module.
 import { testState } from "teststate";
@@ -39,6 +41,31 @@ describe("test fooMethod", () =>
   });
 });
 ```
+
+Use `resetState` method when your test state consist only primitive types and can be serialized.
+
+```ts
+// (1) import resetState method from teststate module.
+import { resetState } from "teststate";
+
+const EXPECTED_VALUE = "...";
+
+describe("test fooMethod", () =>
+  // (2) Declare state.
+  const state = {
+    foo: 1,
+  }
+
+  // (3) Call `resetState` in `beforeEach` method.
+  beforeEach(() => resetState(state));
+
+  it("returns bar", () => {
+    // (4) Use state inside test methods.
+    const result = fooMethod(state.foo);
+
+    expect(result).toBe(EXPECTED_VALUE);
+  });
+});
 
 ## Why should I use this library?
 
