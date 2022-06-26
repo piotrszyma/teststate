@@ -1,6 +1,6 @@
 import { resetState } from "./resetState";
 
-it("sets state id to identify state", () => {
+it("adds STATE_ID_PROPERTY to original state as non enumerable", () => {
   const state = {
     a: 1,
     b: 2,
@@ -73,12 +73,11 @@ it("can be used for array", () => {
   expect(stateWithArray.a).toEqual([1, 2, 3]);
 });
 
+// Typing tests.
 // @ts-expect-error
-resetState({value: new Date()})
-
+resetState({ value: new Date() });
 // @ts-expect-error
-resetState({value: new Object()})
-
+resetState({ value: new Object() });
 class Dummy {}
 // @ts-expect-error
 resetState({value: new Dummy()})
