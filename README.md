@@ -40,6 +40,31 @@ describe("test fooMethod", () =>
 });
 ```
 
+Use `resetState` method when your test state consist only primitive types and can be serialized.
+
+```ts
+// (1) import resetState method from teststate module.
+import { resetState } from "teststate";
+
+const EXPECTED_VALUE = "...";
+
+describe("test fooMethod", () =>
+  // (2) Declare state.
+  const state = {
+    foo: 1,
+  }
+
+  // (3) Call `resetState` in `beforeEach` method.
+  beforeEach(() => resetState(state));
+
+  it("returns bar", () => {
+    // (4) Use state inside test methods.
+    const result = fooMethod(state.foo);
+
+    expect(result).toBe(EXPECTED_VALUE);
+  });
+});
+
 ## Why should I use this library?
 
 Normally, when you define some state in `beforeEach` hook, you do:
