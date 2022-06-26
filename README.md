@@ -18,6 +18,8 @@ yarn add --dev teststate
 
 ## How to use this library?
 
+Use `testState` method when your test state is built from some complex types / factory methods.
+
 ```ts
 // (1) import testState method from teststate module.
 import { testState } from "teststate";
