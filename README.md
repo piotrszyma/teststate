@@ -66,6 +66,7 @@ describe("test fooMethod", () =>
     expect(result).toBe(EXPECTED_VALUE);
   });
 });
+```
 
 ## Why should I use this library?
 
