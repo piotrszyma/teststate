@@ -1,6 +1,10 @@
-# teststate
+# teststate [![npm](https://img.shields.io/npm/v/teststate.svg)](https://www.npmjs.com/package/vue) [![Download](https://img.shields.io/npm/dm/teststate)](https://www.npmjs.com/package/teststate)
 
 Create immutable test state reinitialized after each test case with type inference.
+
+## Getting Started
+
+Please follow the documentation at [piotrszyma.github.io/teststate](https://piotrszyma.github.io/teststate/)
 
 ## Install
 
